@@ -87,3 +87,6 @@ From the root directory of your project
 1) Utilized `chalk` (https://www.npmjs.com/package/chalk) to add colors to log statements
 ![alt tag](https://raw.githubusercontent.com/niki4810/node-proxy/gh-pages/images/extra-chalk.gif)
 
+2) Adding documentation flags
+Temperoraly code checked into this branch `chore-adding-documentation-to-args`
+![alt tag](https://raw.githubusercontent.com/niki4810/node-proxy/gh-pages/images/documentation-flags.gif)
