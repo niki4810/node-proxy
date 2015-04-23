@@ -9,6 +9,15 @@ let chalk = require('chalk');
 let fs = require('fs')
 let argv = require('yargs')
     .default('host', '127.0.0.1')
+    .usage('Usage: $0 <command> [options]')
+    .command('stream', 'log statements to a file')    
+    .describe('stream', 'Load a file')
+    .example('$0 --stream /tmp/node-proxy.log', 'log statements to a file')   
+    .command('url', 'proxy to a url')    
+    .describe('url', 'proxy')
+    .example('$0 --url http://www.google.com', 'proxy to a specified url')     
+    .help('h')
+    .alias('h', 'help')    
     .argv
 let scheme = 'http://'
 
