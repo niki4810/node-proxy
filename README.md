@@ -85,4 +85,5 @@ From the root directory of your project
 ## Extra
 
 1) Utilized `chalk` (https://www.npmjs.com/package/chalk) to add colors to log statements
+![alt tag](https://raw.githubusercontent.com/niki4810/node-proxy/gh-pages/images/extra-chalk.gif)
 
