@@ -8,6 +8,8 @@ http.createServer((req, res) => {
     	res.setHeader(header, req.headers[header])
 	}
     req.pipe(res)
+    process.stdout.write('\n\n\n' + JSON.stringify(req.headers))
+	req.pipe(process.stdout)
 }).listen(8000)
 
 
@@ -19,5 +21,9 @@ http.createServer((req, res) => {
 	}
 	request(options).pipe(res)
 	options.method = req.method
-	req.pipe(request(options)).pipe(res)
+	// Log the proxy request headers and content in our server callback
+	let downstreamResponse = req.pipe(request(options))
+	process.stdout.write(JSON.stringify(downstreamResponse.headers))
+	downstreamResponse.pipe(process.stdout)
+	downstreamResponse.pipe(res)
 }).listen(8001)
