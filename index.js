@@ -13,35 +13,39 @@ let port = argv.port || argv.host === '127.0.0.1' ? 8000 : 80
 
 let destinationUrl = argv.url || scheme + argv.host + ':' + port
 
+let logStream = argv.stream ? fs.createWriteStream(argv.stream) : process.stdout
+
 http.createServer((req, res) => {
-    console.log(`Request received at: ${req.url}`)
+    logStream.write(`Request received at: ${req.url}`)
     for (let header in req.headers) {
     	res.setHeader(header, req.headers[header])
 	}
     req.pipe(res)
-    process.stdout.write('\n\n\n' + JSON.stringify(req.headers))
+    logStream.write('\n\n\nEcho:' + JSON.stringify(req.headers) + '\n')
 	req.pipe(process.stdout)
 }).listen(8000)
 
-
 http.createServer((req, res) => {
-	console.log(`Proxying request to: ${destinationUrl + req.url}`)
-			
-	var url = destinationUrl;
+	logStream.write(`\nProxying request to: ${destinationUrl + req.url}\n`)			
+	var url = destinationUrl + req.url;	
 	if(req.headers['x-desination-url']) {
 		url = req.headers['x-desination-url'];
 	}
 
 	let options = {
+		method: req.method,
     	headers: req.headers,
-    	url: url + req.url
+    	url: url
 	}
 
-	request(options).pipe(res)
-	options.method = req.method
+	logStream.write('\n\n\nProxy Request:\n' + JSON.stringify(req.headers))
+  	req.pipe(logStream)
+	
+	through(req, logStream, {autoDestroy: false})
+
 	// Log the proxy request headers and content in our server callback
 	let downstreamResponse = req.pipe(request(options))
-	process.stdout.write(JSON.stringify(downstreamResponse.headers))
-	downstreamResponse.pipe(process.stdout)
 	downstreamResponse.pipe(res)
+	logStream.write('\n\n\nDownstream Response:\n' + JSON.stringify(downstreamResponse.headers))
+	through(downstreamResponse, logStream, {autoDestroy: false})	
 }).listen(8001)
