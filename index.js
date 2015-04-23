@@ -1,3 +1,7 @@
+// node-proxy
+// version: v 0.0.1
+// author: Nikhilesh Katakam
+
 let http = require('http')
 let request = require('request')
 let through = require('through')
