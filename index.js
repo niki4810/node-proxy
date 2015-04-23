@@ -42,7 +42,6 @@ http.createServer((req, res) => {
 		headers: req.headers,
 		url : url + req.url
 	}
-
 	
 	logStream.write('\n\n\nProxy Request:\n' + JSON.stringify(req.headers))
   	req.pipe(logStream)
