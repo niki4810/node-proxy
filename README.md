@@ -4,9 +4,9 @@ A simple proxy server in node with logging and cli
 # Getting started
 
 - Install `NodeJS` if not already installed. See http://nodejs.org/
-- Install `babel-node` : npm install -g babel
-- Install `nodemon`:  npm install -g nodemon
-- Clone the repo: git clone git@github.com:niki4810/node-proxy.git
+- Install `babel-node` : `npm install -g babel`
+- Install `nodemon`:  `npm install -g nodemon`
+- Clone the repo: `git clone git@github.com:niki4810/node-proxy.git`
 - run  `npm install`
 
 # Starting your server
