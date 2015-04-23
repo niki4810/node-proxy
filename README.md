@@ -81,3 +81,8 @@ From the root directory of your project
 - see the contents of log file via `cat /tmp/node-proxy.log`
 ![alt tag](https://raw.githubusercontent.com/niki4810/node-proxy/gh-pages/images/9-logging-to-a-file.gif)
 
+
+## Extra
+
+1) Utilized `chalk` (https://www.npmjs.com/package/chalk) to add colors to log statements
+

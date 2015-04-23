@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/niki4810/node-proxy",
   "dependencies": {
+    "chalk": "^1.0.0",
     "request": "^2.55.0",
     "through": "^2.3.7",
     "yargs": "^3.7.2"

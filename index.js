@@ -5,6 +5,7 @@
 let http = require('http')
 let request = require('request')
 let through = require('through')
+let chalk = require('chalk');
 let fs = require('fs')
 let argv = require('yargs')
     .default('host', '127.0.0.1')
@@ -20,8 +21,8 @@ let destinationUrl = argv.url || scheme + argv.host + ':' + port
 let logStream = argv.stream ? fs.createWriteStream(argv.stream) : process.stdout
 
 http.createServer((req, res) => {
-	logStream.write(`Request received at: ${req.url}`)
-	logStream.write('\n\n\nEcho:' + JSON.stringify(req.headers) + '\n')	    
+	logStream.write(chalk.blue(`Request received at: ${req.url}`))
+	logStream.write(chalk.green('\n\n\nEcho:' + JSON.stringify(req.headers) + '\n'))	    
     for (let header in req.headers) {
     	res.setHeader(header, req.headers[header])
 	}
@@ -43,7 +44,7 @@ http.createServer((req, res) => {
 		url : url + req.url
 	}
 	
-	logStream.write('\n\n\nProxy Request:\n' + JSON.stringify(req.headers))
+	logStream.write(chalk.red('\n\n\nProxy Request:\n' + JSON.stringify(req.headers)))
   	req.pipe(logStream)
 	
 	through(req, logStream, {autoDestroy: false})
@@ -51,6 +52,6 @@ http.createServer((req, res) => {
 	// Log the proxy request headers and content in our server callback
 	let downstreamResponse = req.pipe(request(options))
 	downstreamResponse.pipe(res)
-	logStream.write('\n\n\nDownstream Response:\n' + JSON.stringify(downstreamResponse.headers))
+	logStream.write(chalk.red('\n\n\nDownstream Response:\n' + JSON.stringify(downstreamResponse.headers)))
 	through(downstreamResponse, logStream, {autoDestroy: false})	
 }).listen(8001)
