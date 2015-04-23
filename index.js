@@ -16,28 +16,30 @@ let destinationUrl = argv.url || scheme + argv.host + ':' + port
 let logStream = argv.stream ? fs.createWriteStream(argv.stream) : process.stdout
 
 http.createServer((req, res) => {
-    logStream.write(`Request received at: ${req.url}`)
+	logStream.write(`Request received at: ${req.url}`)
+	logStream.write('\n\n\nEcho:' + JSON.stringify(req.headers) + '\n')	    
     for (let header in req.headers) {
     	res.setHeader(header, req.headers[header])
 	}
-    req.pipe(res)
-    logStream.write('\n\n\nEcho:' + JSON.stringify(req.headers) + '\n')
-	req.pipe(process.stdout)
+	through(req, logStream, {autoDestroy: false})
+    req.pipe(res)    
 }).listen(8000)
 
 http.createServer((req, res) => {
-	logStream.write(`\nProxying request to: ${destinationUrl + req.url}\n`)			
-	var url = destinationUrl + req.url;	
-	if(req.headers['x-desination-url']) {
-		url = req.headers['x-desination-url'];
+	logStream.write(`\nProxying request to: ${destinationUrl + req.url}\n`)	
+	let url = destinationUrl
+	
+	if (req.headers['x-destination-url']) {
+		url = req.headers['x-destination-url']
 	}
-
+	
 	let options = {
 		method: req.method,
-    	headers: req.headers,
-    	url: url
+		headers: req.headers,
+		url : url + req.url
 	}
 
+	
 	logStream.write('\n\n\nProxy Request:\n' + JSON.stringify(req.headers))
   	req.pipe(logStream)
 	
