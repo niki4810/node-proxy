@@ -17,7 +17,6 @@ From the root directory of your project
 
 ```
 	$ babel-node index.js
-
 ```
 2) using nodemon
 
@@ -29,7 +28,6 @@ From the root directory of your project
 
 ```
   $ npm start 
-
 ```
 
 # Features
@@ -37,7 +35,7 @@ From the root directory of your project
 ## Echo Service
 
 - start the server using `npm start`
-- from another terminal tab run `curl http://127.0.0.1:8000 -d "Hello Echo"
+- from another terminal tab run `curl http://127.0.0.1:8000 -d "Hello Echo"`
 
 
 - you can also use verbose option using `-v`
@@ -48,18 +46,18 @@ From the root directory of your project
 ## Basic proxy
 
 - start the server using `npm start`
-- from another terminal tab run `curl -v http://127.0.0.1:8001 -d "Hello From Proxy" -H "x-asdf:Temp Proxy Header"
+- from another terminal tab run `curl -v http://127.0.0.1:8001 -d "Hello From Proxy" -H "x-asdf:Temp Proxy Header"`
 
 
 ## Passing x-destination-url in header
 - start the server using `npm start`
-- from another terminal tab run `curl -v http://127.0.0.1:8001 -H "x-destination-url:http://www.google.com"
+- from another terminal tab run `curl -v http://127.0.0.1:8001 -H "x-destination-url:http://www.google.com"`
 
 
 ## CLI
 
 ### Passing url option
-- start the server using (pass url arg) `nodemon --exec babel-node -- index.js  --url http://www.google.com
+- start the server using (pass url arg) `nodemon --exec babel-node -- index.js  --url http://www.google.com`
 - from another terminal tab run `curl -v http://127.0.0.1:8001`
 
 
@@ -72,7 +70,7 @@ From the root directory of your project
 
 ### Logging to a file
 
-- start the server using `nodemon --exec babel-node -- index.js --stream /tmp/node-proxy.log
-- from another terminal tab run `curl http://127.0.0.1:8000 -d "Hello Echo"
+- start the server using `nodemon --exec babel-node -- index.js --stream /tmp/node-proxy.log`
+- from another terminal tab run `curl http://127.0.0.1:8000 -d "Hello Echo"`
 - see the contents of log file via `cat /tmp/node-proxy.log`
 
