@@ -1,6 +1,17 @@
 let http = require('http')
 let request = require('request')
-let destinationUrl = '127.0.0.1:8000'
+let through = require('through')
+let fs = require('fs')
+let argv = require('yargs')
+    .default('host', '127.0.0.1')
+    .argv
+let scheme = 'http://'
+
+// Get the --port value
+// If none, default to the echo server port, or 80 if --host exists
+let port = argv.port || argv.host === '127.0.0.1' ? 8000 : 80
+
+let destinationUrl = argv.url || scheme + argv.host + ':' + port
 
 http.createServer((req, res) => {
     console.log(`Request received at: ${req.url}`)
@@ -15,10 +26,17 @@ http.createServer((req, res) => {
 
 http.createServer((req, res) => {
 	console.log(`Proxying request to: ${destinationUrl + req.url}`)
+			
+	var url = destinationUrl;
+	if(req.headers['x-desination-url']) {
+		url = req.headers['x-desination-url'];
+	}
+
 	let options = {
     	headers: req.headers,
-    	url: `http://${destinationUrl}${req.url}`
+    	url: url + req.url
 	}
+
 	request(options).pipe(res)
 	options.method = req.method
 	// Log the proxy request headers and content in our server callback
