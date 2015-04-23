@@ -49,7 +49,7 @@ From the root directory of your project
 ## Basic proxy
 
 - start the server using `npm start`
-- from another terminal tab run `curl -v http://127.0.0.1:8001 -d "Hello From Proxy" -H "x-asdf:Temp Proxy Header"`
+- from another terminal tab run `curl -v http://127.0.0.1:8001 -d "Hello From Proxy" -H "x:asdf:Temp Proxy Header"`
 ![alt tag](https://raw.githubusercontent.com/niki4810/node-proxy/gh-pages/images/5-basic-proxy.gif)
 
 ## Passing x-destination-url in header
